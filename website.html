@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Motors & Dynamics | 150+ Exotics & Superbikes</title>
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --bg-card: rgba(18, 22, 31, 0.85);
+      --accent: #e63946;
+      --accent-hover: #ff4d5a;
+      --text-main: #f1f5f9;
+      --text-sub: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+
+    /* Header */
+    header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(7, 9, 14, 0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-container { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2rem; }
+    .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; color: var(--text-main); text-decoration: none; }
+    .logo span { color: var(--accent); }
+
+    /* Layout & Hero */
+    .hero { padding: 9rem 2rem 2.5rem 2rem; max-width: 1280px; margin: 0 auto; text-align: center; }
+    .hero h1 { font-size: 3rem; font-weight: 900; margin-bottom: 0.8rem; }
+    .hero p { color: var(--text-sub); font-size: 1.15rem; max-width: 650px; margin: 0 auto 2rem auto; }
+
+    /* Category Toggle Tabs */
+    .category-tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+    .tab-btn { padding: 0.8rem 1.8rem; border-radius: 50px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-sub); font-weight: 700; cursor: pointer; transition: var(--transition); }
+    .tab-btn.active, .tab-btn:hover { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 4px 20px rgba(230, 57, 70, 0.4); }
+
+    /* Interactive Search & Filter Controls */
+    .filter-bar { max-width: 1280px; margin: 0 auto 3rem auto; padding: 0 2rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+    .search-input, .select-input { padding: 0.8rem 1.2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; color: white; font-size: 0.95rem; outline: none; }
+    .search-input { flex-grow: 1; min-width: 250px; }
+    .search-input:focus, .select-input:focus { border-color: var(--accent); }
+
+    /* Inventory Section */
+    .inventory-container { max-width: 1280px; margin: 0 auto; padding: 0 2rem 4rem 2rem; }
+    .inventory-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; color: var(--text-sub); font-size: 0.95rem; }
+    
+    .car-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.8rem; }
+    .car-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: var(--transition); animation: fadeIn 0.4s ease forwards; }
+    .car-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+    .car-img-wrapper { height: 190px; overflow: hidden; position: relative; }
+    .car-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .car-card:hover .car-img-wrapper img { transform: scale(1.08); }
+    .badge { position: absolute; top: 12px; right: 12px; background: rgba(7, 9, 14, 0.85); border: 1px solid var(--border); color: var(--accent); padding: 0.25rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    
+    .car-body { padding: 1.3rem; }
+    .car-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .car-specs { display: flex; justify-content: space-between; color: var(--text-sub); font-size: 0.85rem; padding: 0.6rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+    .car-footer { display: flex; justify-content: space-between; align-items: center; }
+    .car-price { font-size: 1.25rem; font-weight: 800; color: white; }
+
+    .btn-accent { background-color: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.85rem; border: none; cursor: pointer; transition: var(--transition); }
+    .btn-accent:hover { background-color: var(--accent-hover); }
+
+    /* Pagination Controls */
+    .pagination { display: flex; justify-content: center; gap: 0.5rem; margin-top: 3rem; flex-wrap: wrap; }
+    .page-btn { padding: 0.6rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; color: white; cursor: pointer; transition: var(--transition); }
+    .page-btn.active, .page-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">APEX<span>DYNAMICS</span></a>
+      <span style="color: var(--text-sub); font-size: 0.9rem;">150+ Hypercars & Superbikes</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>100 Hypercars & 50 Superbikes</h1>
+    <p>Browse our complete fleet of high-performance vehicles and exotics in real time.</p>
+
+    <!-- Category Selector -->
+    <div class="category-tabs">
+      <button class="tab-btn active" onclick="setCategory('all', this)">All Fleet (150)</button>
+      <button class="tab-btn" onclick="setCategory('car', this)">Hypercars (100)</button>
+      <button class="tab-btn" onclick="setCategory('bike', this)">Superbikes (50)</button>
+    </div>
+  </section>
+
+  <!-- Interactive Search & Filters -->
+  <div class="filter-bar">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search by model, make, or engine (e.g., Apex, Ninja, Ducati, V12)...">
+    <select id="sortFilter" class="select-input">
+      <option value="default">Sort by: Default</option>
+      <option value="low-high">Price: Low to High</option>
+      <option value="high-low">Price: High to Low</option>
+    </select>
+  </div>
+
+  <!-- Inventory Grid -->
+  <main class="inventory-container">
+    <div class="inventory-meta">
+      <span id="carCount">Showing vehicles...</span>
+      <span>Page <span id="currentPageNum">1</span></span>
+    </div>
+
+    <div class="car-grid" id="carGrid"></div>
+    <div class="pagination" id="pagination"></div>
+  </main>
+
+  <script>
+    // Asset Pools
+    const carImages = [
+      "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=800&q=80"
+    ];
+
+    const bikeImages = [
+      "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1599819811279-d5ad9cccf839?auto=format&fit=crop&w=800&q=80"
+    ];
+
+    const carModels = ["Phantom GT", "Spectre Vision", "Vantage Carbon", "Aero Dynamic", "Velocity Spider"];
+    const bikeModels = ["Ninja H2R Custom", "Panigale V4 SP2", "Apex RR Superbike", "M1000 RR Carbon", "Streetfighter V4"];
+    const bikeEngines = ["998cc V4", "1000cc Inline-4", "Supercharged 998cc", "1103cc Desmosedici"];
+
+    // 1. GENERATE 100 CARS
+    const carsData = Array.from({ length: 100 }, (_, i) => ({
+      id: `car-${i + 1}`,
+      category: "car",
+      title: `Apex ${carModels[i % carModels.length]} #${i + 1}`,
+      badge: (i % 2 === 0) ? "Hypercar V12" : "Twin-Turbo V8",
+      year: 2023 + (i % 3),
+      stat: `${550 + ((i * 17) % 450)} HP`,
+      accel: "0-60 in 2.7s",
+      price: 180000 + ((i * 12500) % 350000),
+      image: carImages[i % carImages.length]
+    }));
+
+    // 2. GENERATE 50 MOTORBIKES
+    const bikesData = Array.from({ length: 50 }, (_, i) => ({
+      id: `bike-${i + 1}`,
+      category: "bike",
+      title: `Apex ${bikeModels[i % bikeModels.length]} #${i + 1}`,
+      badge: bikeEngines[i % bikeEngines.length],
+      year: 2024 + (i % 2),
+      stat: `${205 + ((i * 5) % 35)} HP`,
+      accel: "0-60 in 2.4s",
+      price: 28000 + ((i * 3500) % 45000),
+      image: bikeImages[i % bikeImages.length]
+    }));
+
+    // COMBINE ALL 150 VEHICLES
+    const allVehicles = [...carsData, ...bikesData];
+
+    // STATE MANAGEMENT
+    let currentCategory = 'all';
+    let filteredVehicles = [...allVehicles];
+    let currentPage = 1;
+    const itemsPerPage = 12;
+
+    const carGrid = document.getElementById("carGrid");
+    const carCount = document.getElementById("carCount");
+    const pagination = document.getElementById("pagination");
+    const currentPageNum = document.getElementById("currentPageNum");
+
+    // RENDER SYSTEM
+    function renderVehicles() {
+      carGrid.innerHTML = "";
+      
+      const start = (currentPage - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const pageVehicles = filteredVehicles.slice(start, end);
+
+      if (pageVehicles.length === 0) {
+        carGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-sub); padding: 3rem;">No vehicles found matching your criteria.</p>`;
+        carCount.innerText = `Showing 0 items`;
+        pagination.innerHTML = "";
+        return;
+      }
+
+      pageVehicles.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "car-card";
+        card.innerHTML = `
+          <div class="car-img-wrapper">
+            <span class="badge">${item.badge}</span>
+            <img src="${item.image}" alt="${item.title}" loading="lazy">
+          </div>
+          <div class="car-body">
+            <h3 class="car-title">${item.title}</h3>
+            <div class="car-specs">
+              <span>${item.year}</span>
+              <span>•</span>
+              <span>${item.stat}</span>
+              <span>•</span>
+              <span>${item.accel}</span>
+            </div>
+            <div class="car-footer">
+              <span class="car-price">$${item.price.toLocaleString()}</span>
+              <button class="btn-accent">Inquire</button>
+            </div>
+          </div>
+        `;
+        carGrid.appendChild(card);
+      });
+
+      const totalPages = Math.ceil(filteredVehicles.length / itemsPerPage);
+      carCount.innerText = `Showing ${start + 1} - ${Math.min(end, filteredVehicles.length)} of ${filteredVehicles.length} vehicles`;
+      currentPageNum.innerText = `${currentPage} of ${totalPages || 1}`;
+
+      renderPagination(totalPages);
+    }
+
+    // PAGINATION GENERATOR
+    function renderPagination(totalPages) {
+      pagination.innerHTML = "";
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.className = `page-btn ${i === currentPage ? "active" : ""}`;
+        btn.innerText = i;
+        btn.onclick = () => {
+          currentPage = i;
+          renderVehicles();
+          window.scrollTo({ top: 350, behavior: 'smooth' });
+        };
+        pagination.appendChild(btn);
+      }
+    }
+
+    // FILTER & SEARCH LOGIC
+    function filterData() {
+      const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+      const sortValue = document.getElementById("sortFilter").value;
+
+      filteredVehicles = allVehicles.filter(item => {
+        const matchesCategory = currentCategory === "all" || item.category === currentCategory;
+        const matchesSearch = item.title.toLowerCase().includes(searchTerm) || item.badge.toLowerCase().includes(searchTerm);
+        return matchesCategory && matchesSearch;
+      });
+
+      if (sortValue === "low-high") {
+        filteredVehicles.sort((a, b) => a.price - b.price);
+      } else if (sortValue === "high-low") {
+        filteredVehicles.sort((a, b) => b.price - a.price);
+      }
+
+      currentPage = 1;
+      renderVehicles();
+    }
+
+    function setCategory(category, btnElement) {
+      currentCategory = category;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+      filterData();
+    }
+
+    document.getElementById("searchInput").addEventListener("input", filterData);
+    document.getElementById("sortFilter").addEventListener("change", filterData);
+
+    // Initial Load
+    renderVehicles();
+  </script>
+</body>
+</html>
